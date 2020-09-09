@@ -1,0 +1,18 @@
+const {Builder, By, Key, until} = require('selenium-webdriver');
+
+async function login() {
+    let driver = await new Builder().forBrowser('chrome').build();
+    try {
+        await driver.get('http://localhost:3002/login');
+
+        await driver.findElement(By.name('username')).sendKeys('JoJo');
+        await driver.findElement(By.name('password')).sendKeys('123');
+        await driver.findElement(By.css("input[type=submit]")).click();
+        let firstResult = await driver.wait(until.elementLocated(By.css('h3>div')), 50000);
+        console.log(await firstResult.getAttribute('textContent'));
+    }
+    catch(e){
+        webdriverErrorHandler(e, driver)
+    }
+}
+login();

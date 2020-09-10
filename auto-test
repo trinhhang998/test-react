@@ -3,60 +3,69 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
 async function login() {
     let driver = await new Builder().forBrowser('chrome').build();
     try {
-        await driver.get('http://localhost:3002/login');
+        await driver.get('http://localhost:3000/login');
 
         await driver.findElement(By.name('username')).sendKeys('JoJo');
         await driver.findElement(By.name('password')).sendKeys('123');
         await driver.findElement(By.css("input[type=submit]")).click();
         console.log("pass login");
-        await driver.wait(() => documentInitialised(), 1000);
-    }
-    catch(e){
-        webdriverErrorHandler(e, driver)
+    } catch(e) {
+        console.log("Error ", e, " occurred!");
     }
 }
 
 async function logout(){
-    await login();
-    await driver.findElement(By.id('btn-logout')).click();
+    let driver = await new Builder().forBrowser('chrome').build();
+    try {
+        await driver.get('http://localhost:3000/login');
+
+        await driver.findElement(By.name('username')).sendKeys('JoJo');
+        await driver.findElement(By.name('password')).sendKeys('123');
+        await driver.findElement(By.css("input[type=submit]")).click();
+        await driver.findElement(By.id('btn-logout')).click();
+        console.log("pass logout");
+    } catch(e) {
+        console.log("Error ", e, " occurred!");
+    }
 }
 
 async function create(){
     let driver = await new Builder().forBrowser('chrome').build();
     try {
-        await driver.get('http://localhost:3002/users/create');
+        await driver.get('http://localhost:3000/users/create');
         await driver.findElement(By.name('username')).sendKeys('JoJo');
         await driver.findElement(By.name('password')).sendKeys('123');
         await driver.findElement(By.css("input[type=submit]")).click();
         await driver.findElement(By.name('username')).sendKeys('new user');
         await driver.findElement(By.name('password')).sendKeys('12345');
         await driver.findElement(By.id("btn-submit")).click();
-    } catch(e){
-        webdriverErrorHandler(e, driver)
+        console.log("pass create");
+    } catch(e) {
+        console.log("Error ", e, " occurred!");
     }
 }
 
 async function update(){
     let driver = await new Builder().forBrowser('chrome').build();
     try {
-        await driver.get('http://localhost:3002/users/1');
+        await driver.get('http://localhost:3000/users/1');
 
         await driver.findElement(By.name('username')).sendKeys('JoJo');
         await driver.findElement(By.name('password')).sendKeys('123');
         await driver.findElement(By.css("input[type=submit]")).click();
-        await driver.findElement(By.name('username')).sendKeys('JoJo');
+        await driver.findElement(By.name('username')).sendKeys('User 1');
         await driver.findElement(By.name('password')).sendKeys('12345');
         await driver.findElement(By.id("btn-submit")).click();
         console.log("pass update");
-    } catch(e){
-        webdriverErrorHandler(e, driver)
+    } catch(e) {
+        console.log("Error ", e, " occurred!");
     }
 }
 
 async function parallelPromise() {
-    await login().then((message)=>console.log(message));
-    await logout().then((message)=>console.log(message));
-    await create().then((message)=>console.log(message));
-    await update().then((message)=>console.log(message))
+    await login();
+    await logout();
+    await create();
+    await update();
 }
 parallelPromise()

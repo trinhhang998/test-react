@@ -8,11 +8,55 @@ async function login() {
         await driver.findElement(By.name('username')).sendKeys('JoJo');
         await driver.findElement(By.name('password')).sendKeys('123');
         await driver.findElement(By.css("input[type=submit]")).click();
-        let firstResult = await driver.wait(until.elementLocated(By.css('h3>div')), 50000);
-        console.log(await firstResult.getAttribute('textContent'));
+        console.log("pass login");
+        await driver.wait(() => documentInitialised(), 1000);
     }
     catch(e){
         webdriverErrorHandler(e, driver)
     }
 }
-login();
+
+async function logout(){
+    await login();
+    await driver.findElement(By.id('btn-logout')).click();
+}
+
+async function create(){
+    let driver = await new Builder().forBrowser('chrome').build();
+    try {
+        await driver.get('http://localhost:3002/users/create');
+        await driver.findElement(By.name('username')).sendKeys('JoJo');
+        await driver.findElement(By.name('password')).sendKeys('123');
+        await driver.findElement(By.css("input[type=submit]")).click();
+        await driver.findElement(By.name('username')).sendKeys('new user');
+        await driver.findElement(By.name('password')).sendKeys('12345');
+        await driver.findElement(By.id("btn-submit")).click();
+    } catch(e){
+        webdriverErrorHandler(e, driver)
+    }
+}
+
+async function update(){
+    let driver = await new Builder().forBrowser('chrome').build();
+    try {
+        await driver.get('http://localhost:3002/users/1');
+
+        await driver.findElement(By.name('username')).sendKeys('JoJo');
+        await driver.findElement(By.name('password')).sendKeys('123');
+        await driver.findElement(By.css("input[type=submit]")).click();
+        await driver.findElement(By.name('username')).sendKeys('JoJo');
+        await driver.findElement(By.name('password')).sendKeys('12345');
+        await driver.findElement(By.id("btn-submit")).click();
+        console.log("pass update");
+    } catch(e){
+        webdriverErrorHandler(e, driver)
+    }
+}
+
+async function parallelPromise() {
+    await login().then((message)=>console.log(message));
+    await logout().then((message)=>console.log(message));
+    await create().then((message)=>console.log(message));
+    await update().then((message)=>console.log(message))
+}
+parallelPromise()

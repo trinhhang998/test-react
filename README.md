@@ -3,9 +3,8 @@
 
 link hướng dẫn: https://www.selenium.dev/documentation/en/selenium_installation/installing_selenium_libraries/
 
-npm init
-npm install selenium-webdriver
-npm install chromedriver
+ npm install selenium-webdriver
+ npm install chromedriver
 2. Tải file auto-test và thêm vào source code của mình.
 3. Run test
 chạy lệnh:

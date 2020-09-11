@@ -9,4 +9,4 @@ link hướng dẫn: https://www.selenium.dev/documentation/en/selenium_installa
 3. Run test
 chạy lệnh:
  node auto-test.js
-4. Sau khi test, chụp lại kết quả: LogTest, màn hình list, cr
+4. Sau khi test, chụp lại kết quả: LogTest

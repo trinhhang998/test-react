@@ -16,6 +16,7 @@ async function login() {
 
 async function logout(){
     let driver = await new Builder().forBrowser('chrome').build();
+
     try {
         await driver.get('http://localhost:3000/login');
 
@@ -24,6 +25,19 @@ async function logout(){
         await driver.findElement(By.css("input[type=submit]")).click();
         await driver.findElement(By.id('btn-logout')).click();
         console.log("pass logout");
+    } catch(e) {
+        console.log("Error ", e, " occurred!");
+    }
+}
+
+async function list(){
+    let driver = await new Builder().forBrowser('chrome').build();
+    try {
+        await driver.get('http://localhost:3000/users/');
+        await driver.findElement(By.name('username')).sendKeys('JoJo');
+        await driver.findElement(By.name('password')).sendKeys('123');
+        await driver.findElement(By.css("input[type=submit]")).click();
+        console.log("pass list");
     } catch(e) {
         console.log("Error ", e, " occurred!");
     }
@@ -65,7 +79,9 @@ async function update(){
 async function parallelPromise() {
     await login();
     await logout();
+    await list();
     await create();
     await update();
 }
 parallelPromise()
+

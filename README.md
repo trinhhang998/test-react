@@ -5,6 +5,7 @@ link hướng dẫn: https://www.selenium.dev/documentation/en/selenium_installa
 
  npm install selenium-webdriver
  npm install chromedriver
+ 
 2. Tải file auto-test và thêm vào source code của mình.
 3. Run test
 chạy lệnh:
